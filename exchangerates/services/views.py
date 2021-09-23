@@ -13,28 +13,6 @@ from .BusinessLogic.RequestCurrencyService import RequestCurrencyService
 from .serializers import *
 
 
-class Currencies(viewsets.ModelViewSet):
-    serializer_class = CurrenciesSerializer
-    queryset = Currencies.objects.all()
-    permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
-
-
-    # def __init__(self, *args, **kwargs):
-    #     self._service = RequestCurrencyService()
-    #     super().__init__()
-    #
-    # def get(self, request, *args, **kwargs):
-    #     result = self._service.request(1)
-    #     return Response(result, status=status.HTTP_200_OK)
-    #
-    # def post(self, request):
-    #     serializer = self.serializer_class(data=request.data)
-    #     if serializer.is_valid():
-    #         serializer.save()
-    #         return Response(serializer.data, status=status.HTTP_200_OK)
-    #     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-
 # class Currencies(APIView):
 #     _service: RequestCurrencyService
 #     serializer_class = CurrenciesSerializer
@@ -55,12 +33,16 @@ class Currencies(viewsets.ModelViewSet):
 #             return Response(serializer.data, status=status.HTTP_200_OK)
 #         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-class CurrenciesDetail(APIView):
+
+class CurrenciesDetail(viewsets.GenericViewSet, mixins.RetrieveModelMixin, mixins.ListModelMixin):
     _service: RequestCurrencyService
-    serializer_class = CurrenciesSerializer
+    serializer_class = CurrencyRatesSerializer
+    queryset = CurrencyRates.objects.all()
+
     def __init__(self, *args, **kwargs):
         self._service = RequestCurrencyService()
         super().__init__()
+
 
     def get(self, request, pk: int):
 
