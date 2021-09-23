@@ -6,10 +6,13 @@ from .views import *
 
 router = routers.DefaultRouter()
 router.register(r'currencies', CurrenciesView, basename='currencies')
-router.register(r'currenciesrates', CurrencyRatesView, basename='CurrenciesRates')
+#router.register(r'currenciesrates', CurrencyRatesView, basename='CurrenciesRates')
 
+currenciesrates = CurrencyRatesView.as_view({
+    'get': 'list'
+})
 
 urlpatterns = [
-    #path('currencies/<int:pk>/', CurrenciesDetail.as_view(), name="currenciesdetail"),
+    path('currenciesrates/<int:pk>/', currenciesrates, name="currenciesdetail"),
     url(r'^', include(router.urls)),
 ]
