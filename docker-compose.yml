@@ -65,7 +65,7 @@ services:
       - ./exchangerates:/usr/src/app/
     depends_on:
       - redis
-      - web
+
 
   celery-beat:
     container_name: celery-beat_
@@ -82,7 +82,7 @@ services:
       - ./exchangerates:/usr/src/app/
     depends_on:
       - redis
-      - web
+
 
 volumes:
   redis:

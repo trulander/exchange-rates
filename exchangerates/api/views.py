@@ -10,28 +10,43 @@ from rest_framework import renderers
 
 from Core.models.models.CurrencyRates import CurrencyRates
 from Core.models.models.Currencies import Currencies
-from .serializers import CurrencyRatesSerializer, CurrenciesSerializer
-
-@api_view(['GET'])
-def api_root(request, format=None):
-    return Response({
-        'users': reverse('currenciesdetail',args=({'pk':1}), request=request, format=format),
-
-    })
+from Core.Serializers.serializers import CurrenciesSerializer
+from Core.Serializers.serializers import CurrencyRatesSerializer
+from services.tasks import update_exchange
 
 
-class CurrenciesView(viewsets.ModelViewSet):
+class CurrenciesView(viewsets.GenericViewSet,
+                     mixins.RetrieveModelMixin,
+                     mixins.ListModelMixin):
     serializer_class = CurrenciesSerializer
     queryset = Currencies.objects.all()
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
+
+
+    def get(self, request, *args, **kwargs):
+        return self.retrieve(request, *args, **kwargs)
+
+
+    def get_all(self, request, *args, **kwargs):
+        return self.list(request, *args, **kwargs)
+
+
+
+# class CurrenciesView(viewsets.ModelViewSet):
+#     serializer_class = CurrenciesSerializer
+#     queryset = Currencies.objects.all()
+#     permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
 
 
 class CurrencyRatesView(viewsets.ViewSet):
     serializer_class = CurrencyRatesSerializer
     queryset = CurrencyRates.objects.all()
 
-    def get_latest(self, request, pk: int):
-        pass
+    @action('GET', detail=False, renderer_classes=[renderers.JSONRenderer])
+    def get_latest_rate(self, request, pk: int):
+        #result = update_exchange(id=pk)
+        result = update_exchange.apply_async(ignore_result=False, kwargs=({'id': 1}))
+        return Response(result.get(), status=status.HTTP_200_OK)
 
     @action('GET', detail=False, renderer_classes=[renderers.JSONRenderer])
     def list(self, request, pk: int = 1):
@@ -42,14 +57,25 @@ class CurrencyRatesView(viewsets.ViewSet):
         serializer = self.serializer_class(current_rates, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
-    def get(self, request, pk: int):
+    @action('GET', detail=False, renderer_classes=[renderers.JSONRenderer])
+    def get_last_rate(self, request, pk: int):
         try:
-            currency_rate = CurrencyRates.objects\
-                .filter(currency__id=pk)\
-                .order_by('actual_date')\
-                .filter()
+            currency_rate = CurrencyRates.objects \
+                .filter(currency__id=pk) \
+                .order_by('-actual_date') \
+                .first()
         except CurrencyRates.DoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND)
 
-        serializer = self.serializer_class(data=currency_rate)
+        serializer = self.serializer_class(currency_rate)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+    @action('GET', detail=False, renderer_classes=[renderers.JSONRenderer])
+    def get(self, request, pk: int):
+        try:
+            currency_rate = CurrencyRates.objects.get(pk=pk)
+        except CurrencyRates.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+
+        serializer = self.serializer_class(currency_rate)
         return Response(serializer.data, status=status.HTTP_200_OK)

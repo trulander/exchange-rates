@@ -1,16 +1,17 @@
 from time import sleep
+from typing import Dict
+
 import requests
 
 from celery import shared_task
 import aiohttp
 import asyncio
 
-async def async_task():
-    await asyncio.sleep(10)
+from services.BusinessLogic.RequestCurrencyService import RequestCurrencyService
 
 @shared_task
-def update_exchange():
-
-
-    print('complete task.....')
-    return True
+def update_exchange(id: int, *args, **kwargs) -> Dict:
+    service = RequestCurrencyService()
+    result = service.request(id=id)
+    print('complete task.....', result)
+    return result
