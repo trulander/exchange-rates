@@ -159,6 +159,16 @@ STATIC_URL = '/static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
+# RestFramework
+REST_FRAMEWORK = {
+    # 'DEFAULT_PERMISSION_CLASSES':[
+    #     'rest_framework.permissions.IsAdminUser',
+    # ],
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE':10
+}
+
+
 # Celery Configuration Options
 CELERY_CONFIGURATION = {
     "broker_url": f"{get_env('CELERY_BROKER_URL')}/1",
@@ -168,7 +178,8 @@ CELERY_CONFIGURATION = {
     "beat_schedule": {
         "update rate": {
             "task": "services.tasks.update_exchange",
-            "schedule": 1
+            "schedule": int(get_env('MAIN_TASK_CELERY_SHEDULE')),
+            "kwargs": {"id": int(get_env('MAIN_TASK_CELERY_CURRENCY_ID'))}
         },
     },
     "beat_scheduler": "django_celery_beat.schedulers:DatabaseScheduler",

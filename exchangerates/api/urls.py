@@ -1,30 +1,30 @@
-from django.conf.urls import url
 from django.urls import path, include
-from rest_framework import routers
 
 from .views import *
 
-# router = routers.DefaultRouter()
-# router.register(r'currencies', CurrenciesView, basename='currencies')
-#router.register(r'currenciesrates', CurrencyRatesView, basename='CurrenciesRates')
-
-
 urlpatterns = [
-    path('ratescurrency/<int:pk>/', CurrencyRatesView.as_view({
+    path('', api_root),
+
+    path('ratescurrency/', CurrencyRatesView.as_view({
         'get': 'list'
+    }), name="rates_currency_all"),
+
+    path('ratescurrency/<int:pk>/', CurrencyRatesView.as_view({
+        'get': 'get_all'
     }), name="rates_currency"),
 
     path('ratecurrency/<int:pk>/', CurrencyRatesView.as_view({
-        'get': 'get'
+        'get': 'get_by_id'
     }), name="rate_currency_detail"),
 
     path('rate/<int:pk>/', CurrencyRatesView.as_view({
-        'get': 'get_last_rate'
+        'get': 'get_last_rate_by_currency_id'
     }), name="rate"),
 
     path('rate_latest/<int:pk>/', CurrencyRatesView.as_view({
-        'get': 'get_latest_rate'
+        'get': 'get_latest_rate_currency_by_id'
     }), name="rate_latest"),
+
 
 
     path('currencies/', CurrenciesView.as_view({
@@ -34,6 +34,4 @@ urlpatterns = [
     path('currencies/<int:pk>/', CurrenciesView.as_view({
         'get': 'get'
     }), name="currencies_detail"),
-
-    # url(r'^', include(router.urls)),
 ]

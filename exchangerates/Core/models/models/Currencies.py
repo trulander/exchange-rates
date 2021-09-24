@@ -7,6 +7,5 @@ class Currencies(models.Model):
     slug = models.SlugField(max_length=50)
     symbol = models.CharField(max_length=50)
 
-    # class Meta(object):
-    #     app_label = 'exchangerates'
-        #db_table = 'exchangerates_Currencies'
+    def __str__(self):
+        return f"{self.id} - {self.slug}"

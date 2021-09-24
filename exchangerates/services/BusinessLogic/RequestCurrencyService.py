@@ -5,12 +5,8 @@ import requests
 from requests import Response
 
 from django.conf import settings
-from rest_framework import status
 
-from Core.models.models.Currencies import Currencies
-from Core.models.models.CurrencyRates import CurrencyRates
-from Core.Serializers.serializers import CurrencyRatesSerializer
-from Core.Serializers.serializers import CurrenciesSerializer
+from services.serializers import CurrencyRatesSerializer, CurrenciesSerializer
 
 
 class RequestCurrencyService():
@@ -52,20 +48,13 @@ class RequestCurrencyService():
         return result
 
     def _save_data(self, data: dict[str, dict[str, Union[int, Any]]]) -> json:
-
         currency_serializer = CurrenciesSerializer(data=data['currency'])
         currency_rate_serializer = CurrencyRatesSerializer(data=data['currency_rate'])
 
         if currency_serializer.is_valid():
             currency_serializer.save()
-            print('curency object correct')
-        else:
-            print(currency_serializer.errors)
 
         if currency_rate_serializer.is_valid():
-            print('currency_rate object correct')
             currency_rate_serializer.save()
-        else:
-            print(currency_rate_serializer.errors)
 
         return currency_rate_serializer.data

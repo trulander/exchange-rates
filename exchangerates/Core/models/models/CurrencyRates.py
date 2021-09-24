@@ -9,8 +9,5 @@ class CurrencyRates(models.Model):
     percent_change_1h = models.FloatField()
     percent_change_24h = models.FloatField()
 
-    # class Meta(object):
-    #     app_label = 'exchangerates'
-        #db_table = 'exchangerates_CurrencyRates'
     def __str__(self):
-        return f"{self.actual_date.date()} {self.actual_date.time()} - {self.price_usd}"
+        return f"{self.id}"
