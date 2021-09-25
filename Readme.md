@@ -31,7 +31,7 @@ Python Backend Level: Junior и Middle/Senior
     currencies/     - выводит список валют сохраненных в DB
     currencies/{id}  - выводит детально информацию о валюте из DB по ее id
 
-CСписок эндпоинтов у services:
+Список эндпоинтов у services:
     requestcurrency/{id} - 
         Делает запрос напрямую на сторонний api курса валюты по id на утороннем сервиса.
         результат сохраняет в бд и в ответ отдает модель валюты.
@@ -52,8 +52,9 @@ CСписок эндпоинтов у services:
 
 Для первого запуска приложения требуется наличие установленного docker и docker-compose на компьютере.
 комманды для развертывания приложения:
-git clone https://github.com/trulander/exchange-rates
-cd exchange-rates
-docker-compose up
+
+    git clone https://github.com/trulander/exchange-rates
+    cd exchange-rates
+    docker-compose up
 
 Докер сам соберет нужные зависимости, установит требуемые пакеты и запустит сразу работающий проект из коробки.
