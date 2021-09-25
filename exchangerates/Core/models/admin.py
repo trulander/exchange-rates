@@ -1,7 +1,7 @@
 from django.contrib import admin
 
-from .models.CurrencyRates import CurrencyRates
-from .models.Currencies import Currencies
+from .models.currencyRates import CurrencyRates
+from .models.сurrencies import Currencies
 
 class AdminCurrencies(admin.ModelAdmin):
     list_display = ('id', 'name', 'slug', 'symbol')

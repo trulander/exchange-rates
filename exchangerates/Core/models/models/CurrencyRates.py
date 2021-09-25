@@ -1,5 +1,5 @@
 from django.db import models
-from .Currencies import Currencies
+from .сurrencies import Currencies
 
 class CurrencyRates(models.Model):
     currency = models.ForeignKey('Currencies', related_name='currency_rates', db_index=True, on_delete=models.CASCADE)

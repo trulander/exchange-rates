@@ -3,7 +3,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework import permissions
 
-from .BusinessLogic.RequestCurrencyService import RequestCurrencyService
+from .BusinessLogic.requestrurrencyrervice import RequestCurrencyService
 from .serializers import CurrencyRatesSerializer, CurrenciesSerializer
 
 
@@ -17,8 +17,7 @@ class Currency(APIView):
         super().__init__()
 
     def get(self, request, pk: int):
-
-        if type(pk) is not int:
+        if isinstance(pk, int):
             return Response('Id must be as integer value', status=status.HTTP_400_BAD_REQUEST)
 
         try:

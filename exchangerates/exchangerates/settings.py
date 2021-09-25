@@ -57,7 +57,7 @@ INSTALLED_APPS = [
     'django_celery_beat',
     'django_celery_results',
 
-    'Core.models',
+    'Core.Models',
     'services',
     'api',
 
