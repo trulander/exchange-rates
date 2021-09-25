@@ -17,7 +17,7 @@ class Currency(APIView):
         super().__init__()
 
     def get(self, request, pk: int):
-        if isinstance(pk, int):
+        if not isinstance(pk, int):
             return Response('Id must be as integer value', status=status.HTTP_400_BAD_REQUEST)
 
         try:
