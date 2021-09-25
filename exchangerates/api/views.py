@@ -5,7 +5,7 @@ from rest_framework.reverse import reverse
 from rest_framework.decorators import action
 from rest_framework import renderers
 
-from Core.Models.models.currencyRates import CurrencyRates
+from Core.Models.models.currencyrates import CurrencyRates
 from Core.Models.models.сurrencies import Currencies
 from .serializers import CurrenciesSerializer, CurrencyRatesSerializer
 from services.tasks import update_exchange
