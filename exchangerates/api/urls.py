@@ -17,11 +17,11 @@ urlpatterns = [
         'get': 'get_by_id'
     }), name="rate_currency_detail"),
 
-    path('rate/<int:pk>/', CurrencyRatesView.as_view({
+    path('lastrate/<int:pk>/', CurrencyRatesView.as_view({
         'get': 'get_last_rate_by_currency_id'
     }), name="rate"),
 
-    path('rate_latest/<int:pk>/', CurrencyRatesView.as_view({
+    path('latestrate/<int:pk>/', CurrencyRatesView.as_view({
         'get': 'get_latest_rate_currency_by_id'
     }), name="rate_latest"),
 

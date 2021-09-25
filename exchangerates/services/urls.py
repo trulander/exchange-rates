@@ -3,5 +3,5 @@ from .views import Currency
 
 
 urlpatterns = [
-    path('currency/<int:pk>/', Currency.as_view(), name="currency"),
+    path('requestcurrency/<int:pk>/', Currency.as_view(), name="currency"),
 ]
