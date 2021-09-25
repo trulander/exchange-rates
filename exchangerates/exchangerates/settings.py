@@ -60,9 +60,6 @@ INSTALLED_APPS = [
     'Core.Models',
     'services',
     'api',
-
-
-
 ]
 
 MIDDLEWARE = [
