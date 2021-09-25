@@ -1,9 +1,6 @@
 #Python
 Python Backend Level: Junior и Middle/Senior
 
-Требования к junior-to-middle уровню такие: http://crm.kt-team.de/~YRk3d (внутренняя ссылка).
-
-
 Писать можно на 2ух стеках (Django + Celery или Flask/aiohttp/Starlette + сервис воркер).
 Нужно написать сервис/сервисы (в зависимости от стека) которые делают
 
