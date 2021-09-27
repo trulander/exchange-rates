@@ -57,4 +57,4 @@ class RequestCurrencyService():
         if currency_rate_serializer.is_valid():
             currency_rate_serializer.save()
 
-        return currency_rate_serializer.data
+        return currency_rate_serializer.initial_data
