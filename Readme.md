@@ -30,6 +30,7 @@ Python Backend Level: Junior и Middle/Senior
     /api/currencies/{id}/  - Выводит детально информацию о валюте из DB по ее id
 
 Список эндпоинтов у services:
+   
     /services/requestcurrency/{id}/ - 
         Делает запрос напрямую на сторонний api курса валюты по id на стороннем сервисе.
         Результат сохраняет в бд и в ответ отдает модель валюты.
