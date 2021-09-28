@@ -15,7 +15,7 @@ from rest_framework.test import APIRequestFactory, force_authenticate, APIClient
 from ..views import Currency
 
 
-class GetLatestCurrency(APITestCase):
+class GetLatestCurrencyTests(APITestCase):
 
     def setUp(self) -> None:
         user = User.objects.create_user(email=None, username='Admin', password='Admin')
