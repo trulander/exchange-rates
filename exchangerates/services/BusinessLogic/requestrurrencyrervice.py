@@ -6,6 +6,7 @@ from requests import Response
 
 from django.conf import settings
 
+from Core.Exceptions.exceprions import IncorrectResponseData, InvalidateSerializerData
 from services.serializers import CurrencyRatesSerializer, CurrenciesSerializer
 
 
@@ -21,29 +22,31 @@ class RequestCurrencyService():
 
         result: Response = requests.get(url=url, params=params)
         if result.status_code == 200:
-            print('status 200')
             decoded_data = self._json_request_decode(data_json=result.json(), id=id)
             return self._save_data(decoded_data)
 
         return None
 
     def _json_request_decode(self, data_json: json, id: int) -> dict[str, dict[str, Union[int, Any]]]:
-        result = {
-            'currency': {
-                'id': id,
-                'name': data_json['data'][str(id)]['name'],
-                'slug': data_json['data'][str(id)]['slug'],
-                'symbol': data_json['data'][str(id)]['symbol'],
-            },
+        try:
+            result = {
+                'currency': {
+                    'id': id,
+                    'name': data_json['data'][str(id)]['name'],
+                    'slug': data_json['data'][str(id)]['slug'],
+                    'symbol': data_json['data'][str(id)]['symbol'],
+                },
 
-            'currency_rate': {
-                'currency': id,
-                'actual_date': data_json['status']['timestamp'],
-                'price_usd': data_json['data'][str(id)]['quote']['USD']['price'],
-                'percent_change_1h': data_json['data'][str(id)]['quote']['USD']['percent_change_1h'],
-                'percent_change_24h': data_json['data'][str(id)]['quote']['USD']['percent_change_24h'],
+                'currency_rate': {
+                    'currency': id,
+                    'actual_date': data_json['status']['timestamp'],
+                    'price_usd': data_json['data'][str(id)]['quote']['USD']['price'],
+                    'percent_change_1h': data_json['data'][str(id)]['quote']['USD']['percent_change_1h'],
+                    'percent_change_24h': data_json['data'][str(id)]['quote']['USD']['percent_change_24h'],
+                }
             }
-        }
+        except KeyError:
+            raise IncorrectResponseData("Incorrect JSON response")
 
         return result
 
@@ -56,5 +59,7 @@ class RequestCurrencyService():
 
         if currency_rate_serializer.is_valid():
             currency_rate_serializer.save()
+        else:
+            raise InvalidateSerializerData(currency_rate_serializer.errors)
 
-        return currency_rate_serializer.initial_data
+        return currency_rate_serializer.data

@@ -1,7 +1,16 @@
+import datetime
 import json
+import time
+from datetime import datetime
+from decimal import Decimal
 
 from django.test import TestCase
+from rest_framework import status
+
+from Core.Exceptions.exceprions import IncorrectResponseData
 from ..BusinessLogic.requestrurrencyrervice import RequestCurrencyService
+from Core.Models.models.сurrencies import Currencies
+from Core.Models.models.currencyrates import CurrencyRates
 
 from mock import patch, Mock
 
@@ -12,9 +21,14 @@ class ServiceTest(TestCase):
 
     def setUp(self) -> None:
         self._service = RequestCurrencyService()
-        self.artificial = Mock()
-        self.artificial.status_code = 200
-        self.artificial.json = lambda : {'status': {'timestamp': '2021-09-27T20:38:50.528Z', 'error_code': 0, 'error_message': None, 'elapsed': 18,
+        self._artificial = Mock()
+        self._artificial.status_code = status.HTTP_200_OK
+        self._artificial.json = lambda: {}
+
+
+    @patch('requests.get')
+    def test_request_correct_response(self, mock):
+        self._artificial.json = lambda : {'status': {'timestamp': '2021-09-27T20:38:50.528Z', 'error_code': 0, 'error_message': None, 'elapsed': 18,
                     'credit_count': 1, 'notice': None}, 'data': {
             '1': {'id': 1, 'name': 'Bitcoin', 'symbol': 'BTC', 'slug': 'bitcoin', 'num_market_pairs': 8678,
                   'date_added': '2013-04-28T00:00:00.000Z',
@@ -36,12 +50,46 @@ class ServiceTest(TestCase):
                             'market_cap': 807435598949.4121, 'market_cap_dominance': 42.6643,
                             'fully_diluted_market_cap': 900585039399.6, 'last_updated': '2021-09-27T20:38:02.000Z'}}}}}
 
-    @patch('requests.get')
-    def test_service_request(self, mock):
-        mock.return_value = self.artificial
+        mock.return_value = self._artificial
 
-        correct_response = {'currency': 1, 'actual_date': '2021-09-27T20:38:50.528Z', 'price_usd': 42885.00187617128, 'percent_change_1h': -0.58936733, 'percent_change_24h': -1.66902867}
+        correct_result = {'id': 1, 'date_added': '2021-09-28T06:39:12.804133Z', 'actual_date': '2021-09-27T20:38:50.528000Z', 'price_usd': '42885.001876171280000', 'percent_change_1h': -0.58936733, 'percent_change_24h': -1.66902867, 'currency': 1}
 
         result = self._service.request(id=1)
 
-        self.assertEqual(result, correct_response)
+
+        currency = Currencies.objects.get()
+        self.assertEqual(currency.id, 1)
+        self.assertEqual(currency.name, 'Bitcoin')
+        self.assertEqual(currency.slug, 'bitcoin')
+        self.assertEqual(currency.symbol, 'BTC')
+
+        currency_rate = CurrencyRates.objects.get()
+        self.assertEqual(currency_rate.currency.id, correct_result['id'])
+        # self.assertEqual(currency_rate.date_added, correct_response['date_added'])
+        self.assertEqual(currency_rate.actual_date.ctime(), datetime.strptime(correct_result['actual_date'], "%Y-%m-%dT%H:%M:%S.%fZ").ctime() )
+        self.assertEqual(round(currency_rate.price_usd, 10), round(Decimal(correct_result['price_usd']), 10))
+        self.assertEqual(currency_rate.percent_change_1h, correct_result['percent_change_1h'])
+        self.assertEqual(currency_rate.percent_change_24h, correct_result['percent_change_24h'])
+
+        self.assertEqual(result['id'], correct_result['id'])
+        self.assertEqual(result['actual_date'], correct_result['actual_date'])
+        self.assertEqual(result['price_usd'], correct_result['price_usd'])
+        self.assertEqual(result['percent_change_1h'], correct_result['percent_change_1h'])
+        self.assertEqual(result['percent_change_24h'], correct_result['percent_change_24h'])
+        self.assertEqual(result['currency'], correct_result['currency'])
+
+    @patch('requests.get')
+    def test_request_response_status_not_200(self, mock):
+        self._artificial.status_code = status.HTTP_403_FORBIDDEN
+        mock.return_value = self._artificial
+        result = self._service.request(id=1)
+
+        self.assertEqual(result, None)
+
+    @patch('requests.get')
+    def test_request_incorrect_response(self, mock):
+        self._artificial.json = lambda : {}
+        mock.return_value = self._artificial
+
+        with self.assertRaises(IncorrectResponseData):
+            result = self._service.request(id=1)
