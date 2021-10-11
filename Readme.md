@@ -1,6 +1,6 @@
 # django + celery
 
-[Link to documentation in Russian](https://github.com/trulander/exchange-rates/blob/master/Readme.md)
+[Link to documentation in Russian](https://github.com/trulander/exchange-rates/blob/master/ReadmeRu.md)
 
 The project based on the task:
 ```team foundation
