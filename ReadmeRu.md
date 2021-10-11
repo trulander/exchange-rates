@@ -1,4 +1,4 @@
-# django + celery
+# django(DRF) + celery + docker + docker-compose
 Описание задачи для проекта:
 ```team foundation
 сервис ходит по API раз в 5-10-15 мин (задать через env) и забирают данные о криптовалюте BTC (например curl -H "X-CMC_PRO_API_KEY: d61bca4c-e9d3-40b9-8d82-abf9b057ffbd" -H "Accept: application/json" -d "id=1" -G https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest) и сохраняют в базу курс, время когда сходили и то что посчитаешь нужным
