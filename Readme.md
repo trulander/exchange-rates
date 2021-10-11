@@ -1,57 +1,64 @@
-Задача:
+# django + celery
 
-    сервис ходит по API раз в 5-10-15 мин (задать через env) и забирают данные о криптовалюте BTC (например curl -H "X-CMC_PRO_API_KEY: d61bca4c-e9d3-40b9-8d82-abf9b057ffbd" -H "Accept: application/json" -d "id=1" -G https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest) и сохраняют в базу курс, время когда сходили и то что посчитаешь нужным
-    сервис который отдает информацию из базы о курсе (последнюю и список)
-        по возможности обновляет таймер (типа я захотел свежак, дернул endpoint и воркер обновил данные)*
-    завернуть все это в Docker + docker-compose**
-    само собой выложить на github
-    круто будет если это будет асинхронно (если не django)***
+[Link to documentation in Russian](https://github.com/trulander/exchange-rates/blob/master/Readme.md)
 
-
-Реализация на django + celery
-
-Список эндпоинтов API:
-
-    /api/ratescurrency/    - Выводит список всех записей с курсами валют
-    /api/ratescurrency/{id}/  - Выводит список курсов с сортировкой по id валюты
-
-    /api/ratecurrency/{id}/  - Выводит 1 запись курса по ее id в таблице
-
-    /api/lastrate/{id}/    - Выводит последнюю запись курса валюты из DB по ее id
-
-    /api/latestrate/{id}/   - Создает task для celery для запроса свежего курса валюты по ее id через сервис к стороннему api.
-                        Ожидает выполнения задачи celery и возвращает результат в ответ.
-                        
-    /api/currencies/     - Выводит список валют сохраненных в DB
-    /api/currencies/{id}/  - Выводит детально информацию о валюте из DB по ее id
-
-Список эндпоинтов у services:
-   
-    /services/requestcurrency/{id}/ - 
-        Делает запрос напрямую на сторонний api курса валюты по id на стороннем сервисе.
-        Результат сохраняет в бд и в ответ отдает модель валюты.
-        Доступно только по авторизации
+The project based on the task:
+```team foundation
+1)  Servise goes by API ones in 5-10-15 minutes (set via .env) and gets the data about 
+    cryptocurrency BTC (for example curl -H "X-CMC_PRO_API_KEY: d61bca4c-e9d3-40b9-8d82-abf9b057ffbd" -H "Accept: application/json" -d "id=1" -G https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest)
+    and save the data to the databases, the exchange rate, the time the data was received, and whatever else you whant.
+2) Service that show informarion from the database about exchange rate(last and list)
+    *   if it possible, if i want to get the latest exchange rate, i go by a special endpoint and worker gets the latest data
+    *   Wrap everythink in a Docker + docker-compose
+3)  share on the Github
+    *   And the best if it async(if not django)
+```
 
 
-В проекте содержится модуль Core которых содержит в себе общие классы для всех приложений
 
-Приложение api отвечает за представление API для конечного пользователя проекта, предоставляет эндпоинты
-для работой с данными находящимися в базе данных.
+##List of enpoinds API:
+```team foundation
+/api/ratescurrency/    - Outputs a list of all records with exchange rates
+/api/ratescurrency/{id}/  - Outputs a list of rates sorted by currency id
 
-Приложение services отвечает за бизнесслогику, содержит 1 сервисный эндпоинт для прямого запроса к стороннему api без celery
-В папке BusinessLogic содержится класс бизнес логики сервиса который отвечает за запросы к стороннему api
+/api/ratecurrency/{id}/  - Outputs 1 course record by its id in the table of DB
 
-Проект базово работает с базой данный sqlite, но рассчитан и на работу с postgreSQL, для переключения на работу с ним есть 
-специальная переменная окружения DATABASE_TYPE которая в случае присвоения ей значения sqlite работает с этой базой, в противном случае с postgresql.
+/api/lastrate/{id}/    - Outputs the last record of the currency rate from the DB by its id
+
+/api/latestrate/{id}/   - Creates a task for celery to request a fresh currency rate by its id through a service to a third-party api.
+                    Expects celery to perform the task and returns the result in response.
+                    
+/api/currencies/     - Outputs a list of currencies stored in the DB
+/api/currencies/{id}/  - Outputs detailed information about the currency from the DB by its id
+```
+
+##List of endpoints services:
+```team foundation
+ /services/requestcurrency/{id}/ - 
+        Makes a request directly to a third-party api for a currency rate by id on a third-party service.
+        Saves the result to the database and responds with the currency model.
+        Available only by authorization
+```
 
 
-Для первого запуска приложения требуется наличие установленного docker и docker-compose на компьютере.
-комманды для развертывания приложения:
+The project contains a Core module which contains common classes for all django applications
 
+The api application is responsible for presenting the API to the end user of the project, providing the endpoints
+to work with the data in the database.
+
+The services application is responsible for business logic and contains 1 service endpoint for direct request to third-party api without celery
+BusinessLogic folder contains business logic class of service which is responsible for third-party api requests
+
+The project out of the box works with the database this sqlite, but is designed to work with postgreSQL, to switch to work with it there is a 
+environment variable DATABASE_TYPE which will work with the database if you set it to sqlite, otherwise it will work with postgresql.
+
+
+## Commands to set up the project
+```shell
     git clone https://github.com/trulander/exchange-rates
     cd exchange-rates
     docker-compose up
+```
+After that you'll get a working project out of the box
 
-Докер сам соберет нужные зависимости, установит требуемые пакеты и запустит сразу работающий проект из коробки.
-
-Асинхронная реализация этого же проекта: [https://github.com/trulander/exchange-rates-async](https://github.com/trulander/exchange-rates-async)
+Asynchronus realisation of the project: [https://github.com/trulander/exchange-rates-async](https://github.com/trulander/exchange-rates-async)
