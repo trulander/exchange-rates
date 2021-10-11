@@ -1,6 +1,4 @@
 #Python
-Python Backend Level: Junior и Middle/Senior
-
 Писать можно на 2ух стеках (Django + Celery или Flask/aiohttp/Starlette + сервис воркер).
 Нужно написать сервис/сервисы (в зависимости от стека) которые делают
 
@@ -57,3 +55,5 @@ Python Backend Level: Junior и Middle/Senior
     docker-compose up
 
 Докер сам соберет нужные зависимости, установит требуемые пакеты и запустит сразу работающий проект из коробки.
+
+Асинхронная реализация этого же проекта: [https://github.com/trulander/exchange-rates-async](https://github.com/trulander/exchange-rates-async)
