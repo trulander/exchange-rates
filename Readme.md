@@ -46,8 +46,8 @@ The project contains a Core module which contains common classes for all django 
 The api application is responsible for presenting the API to the end user of the project, providing the endpoints
 to work with the data in the database.
 
-The services application is responsible for business logic and contains 1 service endpoint for direct request to third-party api without celery
-BusinessLogic folder contains business logic class of service which is responsible for third-party api requests
+The services application is responsible for business logic and contains 1 service endpoint for direct request to third-party api without celery.<br>
+BusinessLogic folder contains business logic class of service which is responsible for third-party api requests.
 
 The project out of the box works with the database this sqlite, but is designed to work with postgreSQL, to switch to work with it there is a 
 environment variable DATABASE_TYPE which will work with the database if you set it to sqlite, otherwise it will work with postgresql.
