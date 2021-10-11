@@ -1,4 +1,4 @@
-# django + celery
+# django(DRF) + celery + docker + docker-compose
 
 [Link to documentation in Russian](https://github.com/trulander/exchange-rates/blob/master/ReadmeRu.md)
 
