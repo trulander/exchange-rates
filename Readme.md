@@ -16,7 +16,7 @@ The project based on the task:
 
 
 
-##List of enpoinds API:
+## List of enpoinds API:
 ```team foundation
 /api/ratescurrency/    - Outputs a list of all records with exchange rates
 /api/ratescurrency/{id}/  - Outputs a list of rates sorted by currency id
@@ -32,7 +32,7 @@ The project based on the task:
 /api/currencies/{id}/  - Outputs detailed information about the currency from the DB by its id
 ```
 
-##List of endpoints services:
+## List of endpoints services:
 ```team foundation
  /services/requestcurrency/{id}/ - 
         Makes a request directly to a third-party api for a currency rate by id on a third-party service.
