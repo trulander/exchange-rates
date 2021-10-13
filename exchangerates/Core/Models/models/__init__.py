@@ -1,2 +1,2 @@
-from .сurrencies import Currencies
-from .currencyrates import CurrencyRates
+from .сurrency import Currency
+from .currencyrate import CurrencyRate

@@ -2,13 +2,13 @@ from rest_framework import serializers
 from Core.Models.models import *
 
 
-class CurrenciesSerializer(serializers.ModelSerializer):
+class CurrencySerializer(serializers.ModelSerializer):
     class Meta:
-        model = Currencies
+        model = Currency
         fields = '__all__'
 
 
-class CurrencyRatesSerializer(serializers.ModelSerializer):
+class CurrencyRateSerializer(serializers.ModelSerializer):
     class Meta:
-        model = CurrencyRates
+        model = CurrencyRate
         fields = '__all__'

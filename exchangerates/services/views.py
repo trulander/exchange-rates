@@ -4,12 +4,12 @@ from rest_framework.views import APIView
 from rest_framework import permissions
 
 from .BusinessLogic.requestrurrencyrervice import RequestCurrencyService
-from .serializers import CurrencyRatesSerializer, CurrenciesSerializer
+from .serializers import CurrencyRateSerializer, CurrencySerializer
 
 
 class Currency(APIView):
     _service: RequestCurrencyService
-    serializer_class = CurrenciesSerializer
+    serializer_class = CurrencySerializer
     permission_classes = (permissions.IsAuthenticated,)
 
     def __init__(self, *args, **kwargs):

@@ -20,7 +20,7 @@ services:
       - db
 
   db:
-    image: postgres
+    image: postgres:14
     container_name: postgres
     restart: always
     volumes:
@@ -33,7 +33,7 @@ services:
       - 5432:5432
 
   adminer:
-    image: adminer
+    image: adminer:4.8.1
     container_name: adminer_
     restart: always
     ports:
@@ -42,7 +42,7 @@ services:
       - db
 
   redis:
-    image: redis
+    image: redis:6.2.6
     container_name: redis_
     volumes:
       - redis:/usr/local/etc/redis

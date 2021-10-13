@@ -18,18 +18,18 @@ The project based on the task:
 
 ## List of enpoinds API:
 ```team foundation
-/api/ratescurrency/    - Outputs a list of all records with exchange rates
-/api/ratescurrency/{id}/  - Outputs a list of rates sorted by currency id
+/api/ratecurrency/all/    - Outputs a list of all records with exchange rates
+/api/ratecurrency/all/{id}/  - Outputs a list of rates sorted by currency id
 
 /api/ratecurrency/{id}/  - Outputs 1 course record by its id in the table of DB
 
-/api/lastrate/{id}/    - Outputs the last record of the currency rate from the DB by its id
+/api/ratecurrency/last/{id}/    - Outputs the last record of the currency rate from the DB by its id
 
-/api/latestrate/{id}/   - Creates a task for celery to request a fresh currency rate by its id through a service to a third-party api.
+/api/ratecurrency/latest/{id}/   - Creates a task for celery to request a fresh currency rate by its id through a service to a third-party api.
                     Expects celery to perform the task and returns the result in response.
                     
-/api/currencies/     - Outputs a list of currencies stored in the DB
-/api/currencies/{id}/  - Outputs detailed information about the currency from the DB by its id
+/api/currency/     - Outputs a list of currencies stored in the DB
+/api/currency/{id}/  - Outputs detailed information about the currency from the DB by its id
 ```
 
 ## List of endpoints services:
@@ -60,5 +60,11 @@ environment variable DATABASE_TYPE which will work with the database if you set 
     docker-compose up
 ```
 After that you'll get a working project out of the box
+
+## Some userful command
+### run django tests
+```shell
+  docker-compose exec web python manage.py test
+```
 
 Asynchronus realisation of the project: [https://github.com/trulander/exchange-rates-async](https://github.com/trulander/exchange-rates-async)

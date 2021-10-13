@@ -6,7 +6,7 @@ from django.test import TestCase, Client
 from django.urls import reverse
 
 
-from ..serializers import CurrenciesSerializer
+from ..serializers import CurrencySerializer
 
 # from mock import patch, Mock
 from unittest.mock import patch, Mock

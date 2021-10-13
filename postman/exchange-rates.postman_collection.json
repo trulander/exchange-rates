@@ -31,12 +31,12 @@
 			"response": []
 		},
 		{
-			"name": "/api/ratescurrency/",
+			"name": "/api/ratecurrency/all/",
 			"request": {
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://127.0.0.1:8000/api/ratescurrency/",
+					"raw": "http://127.0.0.1:8000/api/ratecurrency/all/",
 					"protocol": "http",
 					"host": [
 						"127",
@@ -47,7 +47,8 @@
 					"port": "8000",
 					"path": [
 						"api",
-						"ratescurrency",
+						"ratecurrency",
+						"all",
 						""
 					]
 				}
@@ -55,12 +56,12 @@
 			"response": []
 		},
 		{
-			"name": "/api/ratescurrency/1/",
+			"name": "/api/ratecurrency/all/1/",
 			"request": {
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://127.0.0.1:8000/api/ratescurrency/1/",
+					"raw": "http://127.0.0.1:8000/api/ratecurrency/all/1/",
 					"protocol": "http",
 					"host": [
 						"127",
@@ -71,7 +72,8 @@
 					"port": "8000",
 					"path": [
 						"api",
-						"ratescurrency",
+						"ratecurrency",
+						"all",
 						"1",
 						""
 					]
@@ -105,12 +107,12 @@
 			"response": []
 		},
 		{
-			"name": "/api/lastrate/1/",
+			"name": "/api/ratecurrency/last/1/",
 			"request": {
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://127.0.0.1:8000/api/lastrate/1/",
+					"raw": "http://127.0.0.1:8000/api/ratecurrency/last/1/",
 					"protocol": "http",
 					"host": [
 						"127",
@@ -121,7 +123,8 @@
 					"port": "8000",
 					"path": [
 						"api",
-						"lastrate",
+						"ratecurrency",
+						"last",
 						"1",
 						""
 					]
@@ -130,12 +133,12 @@
 			"response": []
 		},
 		{
-			"name": "/api/latestrate/1/",
+			"name": "/api/ratecurrency/latest/1/",
 			"request": {
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://127.0.0.1:8000/api/latestrate/1/",
+					"raw": "http://127.0.0.1:8000/api/ratecurrency/latest/1/",
 					"protocol": "http",
 					"host": [
 						"127",
@@ -146,7 +149,8 @@
 					"port": "8000",
 					"path": [
 						"api",
-						"latestrate",
+						"ratecurrency",
+						"latest",
 						"1",
 						""
 					]
@@ -155,12 +159,12 @@
 			"response": []
 		},
 		{
-			"name": "/api/currencies/",
+			"name": "/api/currency/",
 			"request": {
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://127.0.0.1:8000/api/currencies/",
+					"raw": "http://127.0.0.1:8000/api/currency/",
 					"protocol": "http",
 					"host": [
 						"127",
@@ -171,7 +175,7 @@
 					"port": "8000",
 					"path": [
 						"api",
-						"currencies",
+						"currency",
 						""
 					]
 				}
@@ -179,12 +183,12 @@
 			"response": []
 		},
 		{
-			"name": "/api/currencies/1/",
+			"name": "/api/currency/1/",
 			"request": {
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://127.0.0.1:8000/api/currencies/1/",
+					"raw": "http://127.0.0.1:8000/api/currency/1/",
 					"protocol": "http",
 					"host": [
 						"127",
@@ -195,7 +199,7 @@
 					"port": "8000",
 					"path": [
 						"api",
-						"currencies",
+						"currency",
 						"1",
 						""
 					]

@@ -12,18 +12,18 @@
 
 ## Список эндпоинтов API:
 ```team foundation
-/api/ratescurrency/    - Выводит список всех записей с курсами валют
-/api/ratescurrency/{id}/  - Выводит список курсов с сортировкой по id валюты
+/api/ratecurrency/all/    - Выводит список всех записей с курсами валют
+/api/ratecurrency/all/{id}/  - Выводит список курсов с сортировкой по id валюты
 
 /api/ratecurrency/{id}/  - Выводит 1 запись курса по ее id в таблице
 
-/api/lastrate/{id}/    - Выводит последнюю запись курса валюты из DB по ее id
+/api/ratecurrency/last/{id}/    - Выводит последнюю запись курса валюты из DB по ее id
 
-/api/latestrate/{id}/   - Создает task для celery для запроса свежего курса валюты по ее id через сервис к стороннему api.
+/api/ratecurrency/latest/{id}/   - Создает task для celery для запроса свежего курса валюты по ее id через сервис к стороннему api.
                     Ожидает выполнения задачи celery и возвращает результат в ответ.
                     
-/api/currencies/     - Выводит список валют сохраненных в DB
-/api/currencies/{id}/  - Выводит детально информацию о валюте из DB по ее id
+/api/currency/     - Выводит список валют сохраненных в DB
+/api/currency/{id}/  - Выводит детально информацию о валюте из DB по ее id
 ```
 
 ## Список эндпоинтов у services:
@@ -56,5 +56,11 @@
 ```
 
 Докер сам соберет нужные зависимости, установит требуемые пакеты и запустит сразу работающий проект из коробки.
+
+## Некоторые полезные комманды
+### Запуск django тестов
+```shell
+  docker-compose exec web python manage.py test
+```
 
 Асинхронная реализация этого же проекта: [https://github.com/trulander/exchange-rates-async](https://github.com/trulander/exchange-rates-async)

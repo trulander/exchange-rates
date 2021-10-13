@@ -9,8 +9,8 @@ from rest_framework import status
 
 from Core.Exceptions.exceprions import IncorrectResponseData
 from ..BusinessLogic.requestrurrencyrervice import RequestCurrencyService
-from Core.Models.models.сurrencies import Currencies
-from Core.Models.models.currencyrates import CurrencyRates
+from Core.Models.models.сurrency import Currency
+from Core.Models.models.currencyrate import CurrencyRate
 
 from mock import patch, Mock
 
@@ -57,13 +57,13 @@ class ServiceTest(TestCase):
         result = self._service.request(id=1)
 
 
-        currency = Currencies.objects.get()
+        currency = Currency.objects.get()
         self.assertEqual(currency.id, 1)
         self.assertEqual(currency.name, 'Bitcoin')
         self.assertEqual(currency.slug, 'bitcoin')
         self.assertEqual(currency.symbol, 'BTC')
 
-        currency_rate = CurrencyRates.objects.get()
+        currency_rate = CurrencyRate.objects.get()
         self.assertEqual(currency_rate.currency.id, correct_result['id'])
         # self.assertEqual(currency_rate.date_added, correct_response['date_added'])
         self.assertEqual(currency_rate.actual_date.ctime(), datetime.strptime(correct_result['actual_date'], "%Y-%m-%dT%H:%M:%S.%fZ").ctime() )

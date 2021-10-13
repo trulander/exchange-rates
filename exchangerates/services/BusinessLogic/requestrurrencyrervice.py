@@ -7,7 +7,7 @@ from requests import Response
 from django.conf import settings
 
 from Core.Exceptions.exceprions import IncorrectResponseData, InvalidateSerializerData
-from services.serializers import CurrencyRatesSerializer, CurrenciesSerializer
+from services.serializers import CurrencyRateSerializer, CurrencySerializer
 
 
 class RequestCurrencyService():
@@ -51,8 +51,8 @@ class RequestCurrencyService():
         return result
 
     def _save_data(self, data: dict[str, dict[str, Union[int, Any]]]) -> json:
-        currency_serializer = CurrenciesSerializer(data=data['currency'])
-        currency_rate_serializer = CurrencyRatesSerializer(data=data['currency_rate'])
+        currency_serializer = CurrencySerializer(data=data['currency'])
+        currency_rate_serializer = CurrencyRateSerializer(data=data['currency_rate'])
 
         if currency_serializer.is_valid():
             currency_serializer.save()

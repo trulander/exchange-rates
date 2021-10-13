@@ -1,7 +1,7 @@
 from django.db import models
 
 
-class Currencies(models.Model):
+class Currency(models.Model):
     id = models.IntegerField(primary_key=True, auto_created=False)
     name = models.CharField(max_length=50)
     slug = models.SlugField(max_length=50)

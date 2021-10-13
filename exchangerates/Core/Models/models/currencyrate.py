@@ -1,8 +1,8 @@
 from django.db import models
-from .сurrencies import Currencies
+from .сurrency import Currency
 
-class CurrencyRates(models.Model):
-    currency = models.ForeignKey('Currencies', related_name='currency_rates', db_index=True, on_delete=models.CASCADE)
+class CurrencyRate(models.Model):
+    currency = models.ForeignKey('Currency', related_name='currency_rate', db_index=True, on_delete=models.CASCADE)
     date_added = models.DateTimeField(auto_now_add=True)
     actual_date = models.DateTimeField(auto_now=False)
     price_usd = models.DecimalField(max_digits=20, decimal_places=15)
